@@ -1,0 +1,38 @@
+{
+  "melanoma": {
+    "disease": "Melanoma",
+    "description": "Melanoma is a serious form of skin cancer that develops in melanocytes, the cells that produce melanin pigment. It often appears as a dark, irregularly-shaped mole and can spread rapidly to other parts of the body if not detected early.",
+    "precautions": "Avoid excessive sun exposure, especially between 10 AM and 4 PM. Always wear broad-spectrum sunscreen with SPF 30 or higher. Wear protective clothing including wide-brimmed hats and long sleeves. Perform regular self-examinations using the ABCDE rule (Asymmetry, Border, Color, Diameter, Evolving).",
+    "cure": "Treatment depends on the stage and includes surgical excision of the melanoma with margins of healthy tissue. Advanced cases may require immunotherapy (checkpoint inhibitors like pembrolizumab), targeted therapy (BRAF/MEK inhibitors), chemotherapy, or radiation therapy."
+  },
+  "eczema": {
+    "disease": "Eczema (Atopic Dermatitis)",
+    "description": "Eczema is a chronic inflammatory skin condition that causes dry, itchy, red, and inflamed patches of skin. It commonly affects children but can persist into adulthood. Eczema is often associated with other allergic conditions like asthma and hay fever.",
+    "precautions": "Keep skin well-moisturized with fragrance-free emollients at least twice daily. Take short, lukewarm baths and avoid hot water. Use mild, fragrance-free soaps. Wear soft, breathable fabrics like cotton. Identify and avoid triggers such as certain foods, stress, or allergens.",
+    "cure": "Apply topical corticosteroids or calcineurin inhibitors as prescribed. Use intensive moisturizers and barrier repair creams regularly. For severe cases, phototherapy or systemic medications like dupilumab (biologics), cyclosporine, or methotrexate may be recommended."
+  },
+  "acne": {
+    "disease": "Acne Vulgaris",
+    "description": "Acne vulgaris is a common skin condition characterized by clogged pores, pimples, blackheads, whiteheads, and sometimes deeper cysts or nodules. It occurs when hair follicles become blocked with oil, dead skin cells, and bacteria.",
+    "precautions": "Wash your face twice daily with a gentle cleanser. Avoid touching, picking, or squeezing pimples. Remove makeup completely before bedtime. Use oil-free, non-comedogenic products. Avoid excessive sun exposure and use oil-free sunscreen.",
+    "cure": "Over-the-counter treatments include benzoyl peroxide and salicylic acid. Prescription options include topical retinoids (tretinoin, adapalene), topical antibiotics, or oral antibiotics (doxycycline). For severe acne, oral isotretinoin (Accutane) may be prescribed."
+  },
+  "rosacea": {
+    "disease": "Rosacea",
+    "description": "Rosacea is a chronic inflammatory skin condition that primarily affects the face, causing persistent redness, visible blood vessels, bumps, and pimples. It often begins with easy flushing or blushing and typically starts after age 30.",
+    "precautions": "Identify and avoid triggers including hot beverages, spicy foods, alcohol, extreme temperatures, sun exposure, and stress. Always use broad-spectrum sunscreen SPF 30+. Use gentle, fragrance-free skincare products designed for sensitive skin.",
+    "cure": "Topical treatments include metronidazole gel, azelaic acid, or ivermectin cream. Oral antibiotics like doxycycline can reduce inflammation. For severe cases, oral isotretinoin may be prescribed. Laser and light-based therapies (IPL, PDL) are highly effective for visible blood vessels."
+  },
+  "basal cell carcinoma": {
+    "disease": "Basal Cell Carcinoma (BCC)",
+    "description": "Basal cell carcinoma is the most common form of skin cancer, developing in the basal cells of the epidermis. It typically appears as a pearly or waxy bump, flat scar-like lesion, or a bleeding sore that heals and returns.",
+    "precautions": "Practice rigorous sun protection: use broad-spectrum sunscreen SPF 30+ daily, seek shade during peak hours, wear protective clothing. Avoid tanning beds. Perform monthly self-skin examinations and schedule annual dermatologist checks.",
+    "cure": "Surgical excision with clear margins is the primary treatment. Mohs micrographic surgery offers the highest cure rate (up to 99%). Other options include curettage and electrodesiccation, cryotherapy, topical treatments (imiquimod, 5-fluorouracil), or radiation therapy."
+  },
+  "normal skin": {
+    "disease": "Normal Healthy Skin",
+    "description": "No skin disease detected. Your skin appears healthy with no visible signs of abnormality, lesions, inflammation, or concerning features. Normal skin is characterized by even tone, smooth texture, and appropriate hydration.",
+    "precautions": "Maintain healthy skin by cleansing gently twice daily, moisturizing regularly, and protecting from sun with daily SPF 30+ sunscreen. Stay hydrated, maintain a balanced diet rich in vitamins, get sufficient sleep, manage stress, avoid smoking, and limit alcohol.",
+    "cure": "No treatment necessary. Continue preventive skincare routine including daily cleansing, moisturizing, and sun protection. Schedule annual dermatological skin checks to monitor for any changes. Maintain a healthy lifestyle."
+  }
+}

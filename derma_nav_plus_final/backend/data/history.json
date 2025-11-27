@@ -1,0 +1,132 @@
+{
+  "records": [
+    {
+      "id": "6ed713de-6e08-4e63-975f-84bffcd035cc",
+      "userId": "u_ayxowx85",
+      "key": "rosacea",
+      "prediction": "Rosacea",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T05:54:29.960Z"
+    },
+    {
+      "id": "02f75009-868a-4305-95ae-fe192ff42a1f",
+      "userId": "u_ayxowx85",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T05:54:51.499Z"
+    },
+    {
+      "id": "69e0ac19-b93b-40db-bf1b-60e0b02b2d2b",
+      "userId": "u_ayxowx85",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T05:54:54.909Z"
+    },
+    {
+      "id": "38e1257f-e4c1-4777-aac4-b13996c0bdd9",
+      "userId": "u_ayxowx85",
+      "key": "rosacea",
+      "prediction": "Rosacea",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:08:39.599Z"
+    },
+    {
+      "id": "4e54bc78-8d85-40d8-8096-62a6056fe371",
+      "userId": "u_ayxowx85",
+      "key": "psoriasis",
+      "prediction": "Psoriasis",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:39:46.105Z"
+    },
+    {
+      "id": "15e827ba-7c73-4590-89ef-961a5d341797",
+      "userId": "u_ayxowx85",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:40:28.553Z"
+    },
+    {
+      "id": "a46f1d31-f21b-4687-b05b-680ec318ba1a",
+      "userId": "u_ayxowx85",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:40:42.647Z"
+    },
+    {
+      "id": "cdb1ed1f-38a9-4795-9196-947d30d841b7",
+      "userId": "u_ayxowx85",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:41:17.761Z"
+    },
+    {
+      "id": "cb8c05dc-8236-4d37-990f-2eda5674a063",
+      "userId": "u_ayxowx85",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:41:42.256Z"
+    },
+    {
+      "id": "95de3183-96ea-4378-a5ec-32c64d04183d",
+      "userId": "u_ayxowx85",
+      "key": "rosacea",
+      "prediction": "Rosacea",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T06:56:09.493Z"
+    },
+    {
+      "id": "aa44de54-4e81-4ce3-93a1-ed00b4b58727",
+      "userId": "u_6mp9b9gl",
+      "key": "rosacea",
+      "prediction": "Rosacea",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T07:03:46.411Z"
+    },
+    {
+      "id": "35cb95d8-d5e7-4149-bbea-ccd8710f3b89",
+      "userId": "u_6mp9b9gl",
+      "key": "rosacea",
+      "prediction": "Rosacea",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T07:03:49.586Z"
+    },
+    {
+      "id": "616337b7-9ff2-4658-997d-2060b649066b",
+      "userId": "u_6mp9b9gl",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T07:03:57.579Z"
+    },
+    {
+      "id": "11e09cd2-8627-410b-9b66-cba7e9f5f9a0",
+      "userId": "u_6mp9b9gl",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T07:04:00.412Z"
+    },
+    {
+      "id": "ef2afb4e-ed0b-4e99-838b-fa0d4be14a6d",
+      "userId": "u_6mp9b9gl",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-12T07:04:11.933Z"
+    },
+    {
+      "id": "f045bc55-73d7-4638-8641-742b245244ec",
+      "userId": "u_6mp9b9gl",
+      "key": "acne",
+      "prediction": "Acne Vulgaris",
+      "confidence": 0.83,
+      "createdAt": "2025-11-27T03:31:35.732Z"
+    }
+  ]
+}
