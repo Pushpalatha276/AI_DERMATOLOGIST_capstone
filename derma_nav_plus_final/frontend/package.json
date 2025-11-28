@@ -14,7 +14,8 @@
     "build": "react-scripts build",
     "postinstall": "echo Installation finished"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://ai-dermatologist-capstone.onrender.com"
+,
   "browserslist": {
     "production": [
       ">0.2%",
