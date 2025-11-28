@@ -13,6 +13,7 @@ const SkinPredictor = () => {
     setFile(selectedFile);
     setPreview(URL.createObjectURL(selectedFile));
     setResult(null);
+    setError('');
   };
 
   const handleSubmit = async () => {
@@ -20,20 +21,28 @@ const SkinPredictor = () => {
       setError('Please upload an image first.');
       return;
     }
-    setError('');
+
     setLoading(true);
+    setError('');
+
     const formData = new FormData();
     formData.append('image', file);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/predict', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/predict`, // Use env variable for backend
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+
       setResult(res.data);
     } catch (err) {
       console.error(err);
       setError('Error predicting image. Please try again.');
     }
+
     setLoading(false);
   };
 
@@ -100,15 +109,15 @@ const SkinPredictor = () => {
             </h2>
             <p className="text-gray-700 text-sm mb-2">
               <span className="font-semibold text-gray-900">Description: </span>
-              {result.details?.description}
+              {result.details?.description || 'N/A'}
             </p>
             <p className="text-gray-700 text-sm mb-2">
               <span className="font-semibold text-gray-900">Precautions: </span>
-              {result.details?.precautions}
+              {result.details?.precautions || 'N/A'}
             </p>
             <p className="text-gray-700 text-sm">
               <span className="font-semibold text-gray-900">Cure: </span>
-              {result.details?.cure}
+              {result.details?.cure || 'N/A'}
             </p>
           </div>
         )}
