@@ -1,122 +1,84 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const API = process.env.REACT_APP_API_URL;
-
-export default function Dashboard({ onLogout, toggleTheme }) {
+const Analyzer = () => {
   const [file, setFile] = useState(null);
-  const [result, setResult] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
-  // Fetch user info
-  useEffect(() => {
-    fetch(`${API}/api/me`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    })
-      .then((res) => res.json())
-      .then(setUser)
-      .catch(console.error);
-  }, []);
+  const API = process.env.REACT_APP_API_URL;
+  const token = localStorage.getItem("token");
 
-  // Fetch History
-  useEffect(() => {
-    fetch(`${API}/api/history`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    })
-      .then((res) => res.json())
-      .then(setHistory)
-      .catch(console.error);
-  }, []);
+  const handleFileChange = (e) => {
+    const img = e.target.files[0];
+    setFile(img);
+    setPreview(URL.createObjectURL(img));
+  };
 
-  // Upload + Analyze Image
   const analyze = async () => {
-    if (!file) {
-      alert("Please upload an image.");
-      return;
-    }
-
+    if (!file) return;
     setLoading(true);
-    const fd = new FormData();
-    fd.append("image", file);
+    setError("");
+    setResult(null);
 
     try {
+      const fd = new FormData();
+      fd.append("image", file);
+
       const res = await fetch(`${API}/api/analyze`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${token}`
         },
         body: fd
       });
 
       const data = await res.json();
-      setResult(data);
+      if (!data.success) throw new Error(data.message || "Prediction failed");
 
-      // Refresh history
-      const hist = await fetch(`${API}/api/history`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-      setHistory(await hist.json());
+      setResult(data);
     } catch (err) {
-      console.error(err);
-      alert("Analysis failed. Check backend.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  // Export History
-  const exportHistory = () => {
-    window.open(`${API}/api/history/export?token=${localStorage.getItem("token")}`);
-  };
-
   return (
-    <div className="dashboard">
-      <header>
-        <h2>Welcome, {user?.name}</h2>
-        <button onClick={toggleTheme}>Dark/Light Mode</button>
-        <button onClick={onLogout}>Logout</button>
-      </header>
+    <div className="analyzer-container">
+      <h2 className="title">Skin Disease Analyzer</h2>
 
-      <section className="analyzer">
-        <h3>Skin Disease Analyzer</h3>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <button onClick={analyze} disabled={loading}>
-          {loading ? "Analyzing..." : "Analyze"}
+      <div className="upload-section">
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+
+        {preview && (
+          <img
+            src={preview}
+            alt="Preview"
+            className="preview-image"
+          />
+        )}
+
+        <button onClick={analyze} disabled={loading} className="analyze-btn">
+          {loading ? "Analyzing..." : "Analyze Skin"}
         </button>
 
-        {result && (
-          <div className="result-box">
-            <h4>Prediction Result</h4>
-            <p>Disease: {result.disease}</p>
-            <p>Confidence: {result.confidence}%</p>
-            <p>Symptoms: {result.symptoms}</p>
-            <p>Precautions: {result.precautions}</p>
-          </div>
-        )}
-      </section>
+        {error && <p className="error-text">{error}</p>}
+      </div>
 
-      <section className="history">
-        <h3>Your Analysis History</h3>
-        <button onClick={exportHistory}>Export as CSV</button>
-        <ul>
-          {history.map((h) => (
-            <li key={h._id}>
-              <strong>{h.disease}</strong> – {new Date(h.date).toLocaleString()}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {result && (
+        <div className="result-box">
+          <h3>Prediction Result</h3>
+          <p><strong>Disease:</strong> {result.prediction}</p>
+          <p><strong>Confidence:</strong> {(result.confidence * 100).toFixed(2)}%</p>
+
+          <h4>Recommendation:</h4>
+          <p>{result.recommendation}</p>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Analyzer;
