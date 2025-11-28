@@ -9,8 +9,10 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
+    "preinstall": "echo Fixing permissions && chmod -R 755 ./node_modules || true",
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "postinstall": "echo Installation finished"
   },
   "proxy": "http://localhost:5000",
   "browserslist": {
