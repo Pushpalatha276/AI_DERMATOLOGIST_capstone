@@ -20,38 +20,6 @@ This project is an AI-powered dermatologist system that predicts skin diseases f
 
 ---
 
-#  Project Structure
-
-```
-derma_nav_plus_final/
-│
-├── backend/          # Node.js API
-│   ├── data/
-│   │   ├── users.json
-│   │   ├── history.json
-│   ├── src/
-│   ├── .env
-│   ├── package.json
-│
-├── frontend/         # React UI
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── data/diseaseDatabase.js
-│   ├── public/
-│   ├── .env
-│   ├── package.json
-│
-├── ml/               # Python ML Model
-│   ├── app.py
-│   ├── predict.py
-│   ├── cnn_skin_classifier.h5
-│   ├── labels.json
-│
-└── reference_dataset/  # Model training images
-```
-
----
 
 #  Tech Stack
 
@@ -218,11 +186,5 @@ Backend URL:
 * Psoriasis
 * Normal Skin
 
----
-
-#  License
-
-This project is for **educational and research purposes**.
-
----
+----
 
