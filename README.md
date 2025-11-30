@@ -9,7 +9,7 @@ This project is an AI-powered dermatologist system that predicts skin diseases f
 
 ---
 
-## 🚀 Features
+##  Features
 
 * Upload or capture skin images using camera
 * Predict 7+ skin disease classes using CNN model
@@ -20,7 +20,7 @@ This project is an AI-powered dermatologist system that predicts skin diseases f
 
 ---
 
-# 📁 Project Structure
+#  Project Structure
 
 ```
 derma_nav_plus_final/
@@ -53,7 +53,7 @@ derma_nav_plus_final/
 
 ---
 
-# ⚙️ Tech Stack
+#  Tech Stack
 
 * **Frontend**: React, Axios
 * **Backend**: Node.js, Express, JSON file database
@@ -62,9 +62,9 @@ derma_nav_plus_final/
 
 ---
 
-# 💻 How to Run Locally
+#  How to Run Locally
 
-### 1️⃣ Clone the repo
+### 1️ Clone the repo
 
 ```bash
 git clone https://github.com/Pushpalatha276/AI_DERMATOLOGIST_capstone.git
@@ -73,7 +73,7 @@ cd AI_DERMATOLOGIST_capstone/derma_nav_plus_final
 
 ---
 
-## 🔧 Backend Setup (Node.js)
+##  Backend Setup (Node.js)
 
 ```bash
 cd backend
@@ -95,7 +95,7 @@ http://localhost:5000
 
 ---
 
-## 🎨 Frontend Setup (React)
+##  Frontend Setup (React)
 
 ```bash
 cd frontend
@@ -117,7 +117,7 @@ http://localhost:3000
 
 ---
 
-## 🤖 ML Model (Python)
+##  ML Model (Python)
 
 Only needed if you retrain the model:
 
@@ -129,13 +129,13 @@ python app.py
 
 ---
 
-# ☁️ Deployment on Render
+#  Deployment on Render
 
 This project uses **two Render services**:
 
 ---
 
-## 1️⃣ FRONTEND – React
+## 1  FRONTEND – React
 
 **Root Directory:**
 
@@ -166,7 +166,7 @@ Frontend URL:
 
 ---
 
-## 2️⃣ BACKEND – Node.js
+## 2️ BACKEND – Node.js
 
 **Root Directory:**
 
@@ -197,7 +197,7 @@ Backend URL:
 
 ---
 
-# 📸 How It Works
+#  How It Works
 
 1. User uploads a skin image
 2. Frontend sends image → backend
@@ -208,7 +208,7 @@ Backend URL:
 
 ---
 
-# 🧠 Predictable Disease Classes
+#  Predictable Disease Classes
 
 * Acne
 * Rosacea
@@ -220,7 +220,7 @@ Backend URL:
 
 ---
 
-# 📜 License
+#  License
 
 This project is for **educational and research purposes**.
 
