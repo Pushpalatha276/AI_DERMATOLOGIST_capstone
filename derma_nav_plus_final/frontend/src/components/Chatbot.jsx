@@ -27,7 +27,7 @@ export default function Chatbot() {
 
     try {
       // Use backend URL from environment variable
-      const backendURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+      const backendURL = process.env.REACT_APP_API_URL || "http://localhost:5000";
       const res = await fetch(`${backendURL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
