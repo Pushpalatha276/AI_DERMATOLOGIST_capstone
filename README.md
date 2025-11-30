@@ -226,9 +226,3 @@ This project is for **educational and research purposes**.
 
 ---
 
-If you want, I can generate:
-
-✅ A shorter (10-line) README
-✅ README with images + badges
-✅ README with architecture diagram
-Just tell me!
