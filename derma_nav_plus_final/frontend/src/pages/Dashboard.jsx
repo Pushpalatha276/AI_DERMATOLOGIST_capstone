@@ -229,8 +229,33 @@ function History() {
     })();
   }, []);
 
-  const exportJson = () => {
-    window.open(`${API_URL}/api/history/export`, "_blank");
+  /* 🔥 FIXED VERSION — Token included + works on Render */
+  const exportJson = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API_URL}/api/history/export`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        alert("Unauthorized or download failed.");
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "history.json";
+      a.click();
+    } catch (err) {
+      console.error("Export error:", err);
+    }
   };
 
   return (
