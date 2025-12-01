@@ -91,7 +91,6 @@ Only needed if you retrain the model:
 
 ```bash
 cd ml
-pip install -r requirements.txt   # if available
 python app.py
 ```
 
@@ -129,8 +128,6 @@ npx serve -s build
 REACT_APP_API_URL=https://ai-dermatologist-capstone.onrender.com
 ```
 
-Frontend URL:
-✔ [https://ai-dermatologist-frontend.onrender.com](https://ai-dermatologist-frontend.onrender.com)
 
 ---
 
@@ -159,9 +156,6 @@ npm start
 ```
 JWT_SECRET=your_secret
 ```
-
-Backend URL:
-✔ [https://ai-dermatologist-capstone.onrender.com](https://ai-dermatologist-capstone.onrender.com)
 
 ---
 
