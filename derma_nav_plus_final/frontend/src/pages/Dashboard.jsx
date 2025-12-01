@@ -4,7 +4,9 @@ import Nav from "../components/Nav";
 import Chatbot from "../components/Chatbot";
 import diseaseDatabase from "../data/diseaseDatabase";
 
-const API_URL = process.env.REACT_APP_API_URL; // Use backend URL
+const API_URL = process.env.REACT_APP_API_URL || ""; // Safe fallback
+
+/* ---------------------- ANALYZER COMPONENT ---------------------- */
 
 function Analyzer() {
   const [file, setFile] = useState(null);
@@ -13,8 +15,10 @@ function Analyzer() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [camOn, setCamOn] = useState(false);
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+
   const token = localStorage.getItem("token");
 
   const onFile = (e) => {
@@ -22,14 +26,19 @@ function Analyzer() {
     setFile(f || null);
     setResult(null);
     setError("");
-    if (f) setPreview(URL.createObjectURL(f));
+
+    if (f) {
+      setPreview(URL.createObjectURL(f));
+    }
   };
 
   const startCam = async () => {
     try {
-      const s = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = s;
-      await videoRef.current.play();
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play().catch(() => {});
+      }
       setCamOn(true);
     } catch (e) {
       setError(e.message);
@@ -41,41 +50,56 @@ function Analyzer() {
     if (v && v.srcObject) {
       v.srcObject.getTracks().forEach((t) => t.stop());
       v.srcObject = null;
-      setCamOn(false);
     }
+    setCamOn(false);
   };
 
   const capture = () => {
-    const v = videoRef.current,
-      c = canvasRef.current;
-    c.width = v.videoWidth;
-    c.height = v.videoHeight;
+    if (!videoRef.current || !canvasRef.current) return;
+
+    const v = videoRef.current;
+    const c = canvasRef.current;
+
+    c.width = v.videoWidth || 400;
+    c.height = v.videoHeight || 400;
+
     c.getContext("2d").drawImage(v, 0, 0);
+
     c.toBlob(
-      (b) => {
-        const f = new File([b], "capture.jpg", { type: "image/jpeg" });
+      (blob) => {
+        if (!blob) return;
+        const f = new File([blob], "capture.jpg", { type: "image/jpeg" });
         setFile(f);
         setPreview(URL.createObjectURL(f));
       },
-      "image/jpeg"
+      "image/jpeg",
+      0.95
     );
   };
 
   const analyze = async () => {
     if (!file) return;
+
     setLoading(true);
     setError("");
     setResult(null);
+
     try {
       const fd = new FormData();
       fd.append("image", file);
+
       const res = await fetch(`${API_URL}/api/analyze`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: fd,
       });
+
       const data = await res.json();
-      if (!data.success) throw new Error(data.message || "Prediction failed");
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Prediction failed");
+      }
+
       setResult(data);
     } catch (e) {
       setError(e.message);
@@ -84,7 +108,13 @@ function Analyzer() {
     }
   };
 
-  const info = result ? diseaseDatabase[result.key || "normal skin"] : null;
+  // Support both result.key and result.prediction
+  const conditionKey =
+    (result?.key && result.key.toLowerCase()) ||
+    (result?.prediction && result.prediction.toLowerCase()) ||
+    "normal skin";
+
+  const info = diseaseDatabase[conditionKey] || null;
 
   return (
     <div className="card">
@@ -93,42 +123,63 @@ function Analyzer() {
           <div className="big-icon">📷</div>
           <h3 style={{ marginTop: 14 }}>Upload Skin Image</h3>
           <p className="small">Drag and drop or click to select (JPG, PNG)</p>
+
           <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
             <label className="btn primary">
-              <input type="file" accept="image/*" onChange={onFile} style={{ display: "none" }} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={onFile}
+                style={{ display: "none" }}
+              />
               Choose Image
             </label>
+
             <button className="btn" onClick={startCam} disabled={camOn}>
               Start Camera
             </button>
+
             <button className="btn" onClick={capture} disabled={!camOn}>
               Capture
             </button>
+
             <button className="btn" onClick={stopCam} disabled={!camOn}>
               Stop
             </button>
           </div>
+
           <video ref={videoRef} className="preview" style={{ marginTop: 12 }} />
           <canvas ref={canvasRef} style={{ display: "none" }} />
         </section>
 
         <section>
           <h3>Preview & Analyze</h3>
-          {preview ? <img className="preview" src={preview} alt="preview" /> : <div className="small">No image chosen yet.</div>}
+
+          {preview ? (
+            <img className="preview" src={preview} alt="preview" />
+          ) : (
+            <div className="small">No image chosen yet.</div>
+          )}
+
           <div style={{ marginTop: 12 }}>
             <button className="btn primary" onClick={analyze} disabled={!file || loading}>
               {loading ? "Analyzing..." : "Analyze Image"}
             </button>
           </div>
+
           {error && (
             <div className="err" style={{ marginTop: 10 }}>
               Error: {error}
             </div>
           )}
+
           {result && (
             <div style={{ marginTop: 14 }}>
               <h3>Prediction: {result.prediction}</h3>
-              <p className="small">Confidence: {(result.confidence * 100).toFixed(1)}%</p>
+              <p className="small">
+                Confidence: {(result.confidence * 100).toFixed(1)}%
+              </p>
+
               {info && (
                 <div className="small" style={{ marginTop: 10 }}>
                   <p>
@@ -144,6 +195,7 @@ function Analyzer() {
               )}
             </div>
           )}
+
           <div className="small" style={{ marginTop: 12 }}>
             <strong>Medical Disclaimer:</strong> Preliminary screening only; consult a dermatologist.
           </div>
@@ -153,15 +205,27 @@ function Analyzer() {
   );
 }
 
+/* ---------------------- HISTORY COMPONENT ---------------------- */
+
 function History() {
   const [items, setItems] = useState([]);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${API_URL}/api/history`, { headers: { Authorization: `Bearer ${token}` } });
-      const data = await res.json();
-      if (data.success) setItems(data.items);
+      try {
+        const res = await fetch(`${API_URL}/api/history`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          setItems(data.items || []);
+        }
+      } catch (e) {
+        console.error("History fetch error:", e);
+      }
     })();
   }, []);
 
@@ -177,6 +241,7 @@ function History() {
           Download JSON
         </button>
       </div>
+
       <table className="table" style={{ marginTop: 10 }}>
         <thead>
           <tr>
@@ -185,15 +250,17 @@ function History() {
             <th>Confidence</th>
           </tr>
         </thead>
+
         <tbody>
-          {items.map((it) => (
-            <tr key={it.id}>
-              <td>{new Date(it.createdAt).toLocaleString()}</td>
-              <td>{it.prediction}</td>
-              <td>{(it.confidence * 100).toFixed(1)}%</td>
-            </tr>
-          ))}
-          {items.length === 0 && (
+          {items.length > 0 ? (
+            items.map((it) => (
+              <tr key={it.id}>
+                <td>{new Date(it.createdAt).toLocaleString()}</td>
+                <td>{it.prediction}</td>
+                <td>{(it.confidence * 100).toFixed(1)}%</td>
+              </tr>
+            ))
+          ) : (
             <tr>
               <td colSpan="3" className="small">
                 No records yet. Analyze an image to see it here.
@@ -206,21 +273,34 @@ function History() {
   );
 }
 
+/* ---------------------- PROFILE COMPONENT ---------------------- */
+
 function Profile() {
   const [me, setMe] = useState(null);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${API_URL}/api/me`, { headers: { Authorization: `Bearer ${token}` } });
-      const data = await res.json();
-      if (data.success) setMe(data.user);
+      try {
+        const res = await fetch(`${API_URL}/api/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          setMe(data.user);
+        }
+      } catch (e) {
+        console.error("Profile load error:", e);
+      }
     })();
   }, []);
 
   return (
     <div className="card">
       <h3>Your Profile</h3>
+
       {me ? (
         <ul>
           <li>
@@ -240,14 +320,20 @@ function Profile() {
   );
 }
 
+/* ---------------------- ABOUT COMPONENT ---------------------- */
+
 function About() {
   return (
     <div className="card">
       <h3>About DermaScan AI</h3>
+
       <p className="small">
-        Final-year engineering project demo featuring AI-powered preliminary screening for skin conditions, real-time camera capture, and integrated guidance via a chatbot.
+        Final-year engineering project demo featuring AI-powered preliminary screening for skin conditions,
+        real-time camera capture, and integrated guidance via a chatbot.
       </p>
+
       <h4 style={{ marginTop: 10 }}>FAQ</h4>
+
       <ul className="small">
         <li>
           <strong>Is this a medical diagnosis?</strong> No. It’s a screening tool only.
@@ -263,12 +349,15 @@ function About() {
   );
 }
 
+/* ---------------------- DASHBOARD MAIN COMPONENT ---------------------- */
+
 export default function Dashboard({ onLogout, toggleTheme }) {
   const [tab, setTab] = useState("Dashboard");
 
   return (
     <>
       <Header authed={true} onLogout={onLogout} onToggleTheme={toggleTheme} />
+
       <div className="container">
         <section className="hero">
           <h1>AI-Powered Skin Analysis</h1>
@@ -276,12 +365,15 @@ export default function Dashboard({ onLogout, toggleTheme }) {
             Analyze images, review your history, manage your profile, and learn more — all from a single dashboard.
           </p>
         </section>
+
         <Nav current={tab} setCurrent={setTab} />
+
         {tab === "Dashboard" && <Analyzer />}
         {tab === "History" && <History />}
         {tab === "Profile" && <Profile />}
         {tab === "About" && <About />}
       </div>
+
       <Chatbot />
     </>
   );
